@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:WissensChat.Desktop.ViewModels"
+             x:Class="WissensChat.Desktop.Views.ChatView"
+             x:DataType="vm:ChatViewModel">
+  <UserControl.Styles>
+    <Style Selector="Border.msg">
+      <Setter Property="Padding" Value="10" />
+      <Setter Property="Margin" Value="0,4" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="MaxWidth" Value="700" />
+      <Setter Property="Background" Value="#22888888" />
+      <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+    <Style Selector="Border.msg.user">
+      <Setter Property="Background" Value="#442E7DD1" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+  </UserControl.Styles>
+  <DockPanel Margin="12">
+    <StackPanel DockPanel.Dock="Bottom" Margin="0,8,0,0" Spacing="6">
+      <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto">
+        <TextBox Text="{Binding Input}" Watermark="Frage an deine Dokumente …">
+          <TextBox.KeyBindings>
+            <KeyBinding Gesture="Enter" Command="{Binding SendCommand}" />
+          </TextBox.KeyBindings>
+        </TextBox>
+        <Button Grid.Column="1" Content="Senden" Command="{Binding SendCommand}" Margin="8,0,0,0" />
+        <Button Grid.Column="2" Content="{Binding MicLabel}" Command="{Binding ToggleRecordingCommand}" Margin="8,0,0,0" MinWidth="150" />
+        <Button Grid.Column="3" Content="Stopp" Command="{Binding CancelCommand}" Margin="8,0,0,0" />
+        <Button Grid.Column="4" Content="Neuer Chat" Command="{Binding NewChatCommand}" Margin="8,0,0,0" />
+      </Grid>
+      <StackPanel Orientation="Horizontal" Spacing="12">
+        <CheckBox Content="Antworten vorlesen" IsChecked="{Binding SpeakAnswers}" />
+        <Button Content="Sprache stoppen" Command="{Binding StopSpeakingCommand}" />
+        <TextBlock Text="{Binding VoiceStatus}" VerticalAlignment="Center" Opacity="0.8" />
+      </StackPanel>
+    </StackPanel>
+    <ScrollViewer x:Name="Scroller">
+      <ItemsControl ItemsSource="{Binding Messages}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:ChatMessageVm">
+            <Border Classes="msg" Classes.user="{Binding IsUser}">
+              <StackPanel Spacing="6">
+                <SelectableTextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding Sources}" FontSize="11" Opacity="0.7" TextWrapping="Wrap"
+                           IsVisible="{Binding Sources, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+              </StackPanel>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </DockPanel>
+</UserControl>

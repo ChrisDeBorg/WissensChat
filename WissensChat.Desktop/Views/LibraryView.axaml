@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:WissensChat.Desktop.ViewModels"
+             xmlns:core="using:WissensChat.Core"
+             x:Class="WissensChat.Desktop.Views.LibraryView"
+             x:DataType="vm:LibraryViewModel">
+  <DockPanel Margin="12">
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8" Margin="0,0,0,8">
+      <Button Content="PDF/DOCX importieren …" Command="{Binding ImportCommand}" />
+      <Button Content="Ausgewähltes löschen" Command="{Binding DeleteCommand}" />
+    </StackPanel>
+    <StackPanel DockPanel.Dock="Bottom" Margin="0,8,0,0" Spacing="4">
+      <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" />
+      <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+    </StackPanel>
+    <ListBox ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument}">
+      <ListBox.ItemTemplate>
+        <DataTemplate x:DataType="core:DocumentInfo">
+          <StackPanel Margin="4">
+            <TextBlock Text="{Binding FileName}" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding ChunkCount, StringFormat='{}{0} Abschnitte'}" Opacity="0.7" FontSize="12" />
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>

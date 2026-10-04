@@ -1,0 +1,13 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:WissensChat.Desktop.ViewModels"
+        xmlns:views="using:WissensChat.Desktop.Views"
+        x:Class="WissensChat.Desktop.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="WissensChat" Width="1000" Height="700">
+  <TabControl>
+    <TabItem Header="Bibliothek"><views:LibraryView DataContext="{Binding Library}" /></TabItem>
+    <TabItem Header="Suche"><views:SearchView DataContext="{Binding Search}" /></TabItem>
+    <TabItem Header="Chat"><views:ChatView DataContext="{Binding Chat}" /></TabItem>
+  </TabControl>
+</Window>

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="WissensChat.Core/WissensChat.Core.csproj" />
+  <Project Path="WissensChat.Desktop/WissensChat.Desktop.csproj" />
+</Solution>
